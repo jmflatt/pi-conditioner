@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const piInterface = require('./pi-interface/on-off');
 const CronJob = require('cron').CronJob;
+const useCronJob = process.argv[2] == 'useCron';
 
 const job = new CronJob('* * * * *', function() {
  if ((!piInterface.isOn()) && piInterface.getTemperature() > 24) {
@@ -32,8 +33,10 @@ app.get('/status', function (req, res) {
   res.send(JSON.stringify({temperature: temp.toString(), status: isOn}));
 });
 
-
-job.start();
+console.log(`cron job enabled: ${useCronJob}`);
+if (useCronJob) {
+  job.start();
+}
 
 app.listen(port, () => console.log('Listening'));
 
