@@ -20,6 +20,14 @@ turnLEDOff: function () {
  },
 isOn: function() {
   return LED.readSync() === 1;
+},
+
+getTemperature: function() {
+  const min = Math.ceil(18);
+  const max = Math.floor(32);
+  const temp = Math.floor(Math.random() * (max - min)) + min;
+  console.log(temp);
+  return temp;
 }
 }
 

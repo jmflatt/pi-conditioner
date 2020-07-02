@@ -5,10 +5,10 @@ const piInterface = require('./pi-interface/on-off');
 const CronJob = require('cron').CronJob;
 
 const job = new CronJob('* * * * *', function() {
- if (piInterface.isOn()) {
-  piInterface.turnLEDOff();
- } else { 
+ if ((!piInterface.isOn()) && piInterface.getTemperature() > 24) {
   piInterface.turnLEDOn();
+ } else if ((piInterface.isOn()) && piInterface.getTemperature() < 20) { 
+  piInterface.turnLEDOff();
  }
 }, null, true, 'America/Chicago');
 
