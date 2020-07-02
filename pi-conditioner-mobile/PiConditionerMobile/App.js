@@ -31,20 +31,22 @@ import HomeScreen  from './components/HomeScreen';
 const App: () => React$Node = () => {
   return (
     <>
+    <View style={styles.header}>
+      <Image style={styles.logo} source={require('./images/pi-conditioner-logo.png')}></Image> 
+     </View>
+
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          
-          {/* <Header backgroundImage='pi-conditioner-mobile/PiConditionerMobile/images/pi-conditioner-logo.png'></Header> */}
-          {/* <Header/> */}
+
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
-          {/* <ImageBackground source={require('./images/pi-conditioner-logo.png')}/>  */}
+          
 
           <View style={styles.body}>
 
@@ -114,7 +116,18 @@ const styles = StyleSheet.create({
     textAlign: "center"
 
   },
+  logo: {
+    marginTop: 100,
+    height: 80,
+    width: 400,
 
+  },
+  header: {
+    borderColor: 'black',
+    borderStyle: "solid",
+    borderBottomWidth: 5,
+    borderTopWidth: 5
+  }
 });
 
 export default App;
