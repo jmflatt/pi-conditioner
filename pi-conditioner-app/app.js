@@ -4,7 +4,8 @@ const port = 3000;
 const piInterface = require('./pi-interface/on-off');
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
-var https = require('https')
+var fs = require('fs');
+var https = require('https');
 
 
 const job = new CronJob('* * * * *', function() {
