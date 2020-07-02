@@ -4,8 +4,6 @@ const port = 3000;
 const piInterface = require('./pi-interface/on-off');
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
-var fs = require('fs');
-var https = require('https');
 
 
 const job = new CronJob('* * * * *', function() {
@@ -41,9 +39,5 @@ if (useCronJob) {
   job.start();
 }
 
-https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-}, app)
-.listen(port, () => console.log('Listening'));
+app.listen(port, () => console.log('Listening'));
 
