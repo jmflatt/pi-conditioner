@@ -28,7 +28,7 @@ class HomeScreen extends React.Component {
 
     async toggleAcStatus() {
         let response;
-        if (this.status == 'on') {
+        if (this.state.status == 'on') {
             response = await service.togglePower('off');
             await this.setState({ status: response.status });
         } else {

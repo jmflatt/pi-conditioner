@@ -3,17 +3,20 @@ var LED = new Gpio(4,'out');
 
 module.exports = {
 turnLEDOn: function () {
+  console.log('turning led on');
   if (LED.readSync() === 0) {
-    console.log('turning led on');
+    console.log('turned led on');
     LED.writeSync(1);	
   }
  },
 turnLEDOff: function () {
+  console.log('turning led off');
   if (LED.readSync() === 1) {
-    console.log('turn led off');
+    console.log('turned led off');
     LED.writeSync(0);	
   } 
  },
+ 
 isOn: function() {
   return LED.readSync() === 1;
 },
