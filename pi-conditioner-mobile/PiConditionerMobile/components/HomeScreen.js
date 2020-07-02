@@ -21,8 +21,6 @@ class HomeScreen extends React.Component {
         await this.getRoomInformation();
     }
 
-
-
     async getRoomInformation() {
         const result = await service.getCurrentStatus();
         console.log("here");
@@ -31,12 +29,13 @@ class HomeScreen extends React.Component {
     }
 
     async toggleAcStatus() {
+        let response;
         if (this.status == 'on') {
-            await service.togglePower('off');
-            await this.setState({ status: 'off' });
+            response = await service.togglePower('off');
+            await this.setState({ status: response.status });
         } else {
-            await service.togglePower('on');
-            await this.setState({ status: 'on' });
+            response = await service.togglePower('on');
+            await this.setState({ status: response.status });
         }
     }
 

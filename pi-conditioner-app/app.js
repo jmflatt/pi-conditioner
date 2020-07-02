@@ -16,12 +16,14 @@ app.get('/', (req, res) => res.send('hello world'));
 
 app.get('/on', function (req, res) {
   piInterface.turnLEDOn();
-  res.send("turnedOn");
+  var isOn = piInterface.isOn() ? 'on' : 'off';
+  res.send(JSON.stringify({success: true, status: isOn}));
 });
 
 app.get('/off', function (req, res) {
   piInterface.turnLEDOff();
-  	res.send("turnedOff");
+  var isOn = piInterface.isOn() ? 'on' : 'off';
+  res.send(JSON.stringify({success: true, status: isOn}));
 });
 
 app.get('/status', function (req, res) {
