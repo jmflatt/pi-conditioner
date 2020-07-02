@@ -14,11 +14,12 @@ import {
   View,
   Text,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
+  Header,
+  Image
 } from 'react-native';
 
 import {
-  Header,
   LearnMoreLinks,
   Colors,
   DebugInstructions,
@@ -34,7 +35,7 @@ const App: () => React$Node = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
+          <Image backgroundImage='pi-conditioner-mobile/PiConditionerMobile/images/pi-conditioner-logo.png'/>
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
@@ -48,7 +49,6 @@ const App: () => React$Node = () => {
     </>
   );
 };
-
 
 const styles = StyleSheet.create({
   scrollView: {

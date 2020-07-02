@@ -4,6 +4,8 @@ const port = 3000;
 const piInterface = require('./pi-interface/on-off');
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
+var https = require('https')
+
 
 const job = new CronJob('* * * * *', function() {
  if ((!piInterface.isOn()) && piInterface.getTemperature() > 24) {
@@ -38,5 +40,9 @@ if (useCronJob) {
   job.start();
 }
 
-app.listen(port, () => console.log('Listening'));
+https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+}, app)
+.listen(port, () => console.log('Listening'));
 

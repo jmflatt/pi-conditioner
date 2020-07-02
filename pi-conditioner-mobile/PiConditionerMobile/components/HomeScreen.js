@@ -23,9 +23,7 @@ class HomeScreen extends React.Component {
 
     async getRoomInformation() {
         const result = await service.getCurrentStatus();
-        console.log("here");
         await this.setState({ temperature: result.temperature, status: result.status });
-        console.log(JSON.stringify(this.state))
     }
 
     async toggleAcStatus() {
@@ -45,11 +43,11 @@ class HomeScreen extends React.Component {
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}>Current Temperature</Text>
                     <Text style={styles.sectionDescription}>
-                        {this.state.temperature}
+                        {this.state.temperature + '\u00b0' + ' Celcius'} 
                     </Text>
                 </View>
                 <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}>Current State</Text>
+                    <Text style={styles.sectionTitle}>Current Status</Text>
                     <Text style={styles.sectionDescription}>
                         {this.state.status}
                     </Text>
@@ -60,6 +58,14 @@ class HomeScreen extends React.Component {
                         onPress={() => this.toggleAcStatus()}
                     >
                         <Text style={styles.buttonText}>{this.state.status == 'on' ? 'Turn AC Off' : 'Turn AC On'}</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.sectionContainer}>
+                    <TouchableOpacity
+                        style={styles.toggleACButton}
+                        onPress={() => this.getRoomInformation()}
+                    >
+                        <Text style={styles.buttonText}>Refresh AC Status</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -107,17 +113,17 @@ const styles = StyleSheet.create({
         textAlign: 'right',
     },
     toggleACButton: {
-        marginRight: 60,
+        marginRight: 40,
         marginLeft: 40,
         marginTop: 30,
         paddingTop: 20,
         paddingBottom: 20,
         paddingLeft: 40,
         paddingRight: 40,
-        backgroundColor: '#FFB612',
+        backgroundColor: '#79bd9d',
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: '#FFB612'
+        borderColor: 'black'
     },
     buttonText: {
         fontSize: 20,
