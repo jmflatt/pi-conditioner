@@ -38,5 +38,5 @@ app.get('/status', function (req, res) {
 
 console.log(`cron job enabled: ${useCronJob}`);
 
-app.listen(port, () => console.log('Listening'));
+app.listen('192.168.1.94:3000', port, () => console.log('Listening'));
 
