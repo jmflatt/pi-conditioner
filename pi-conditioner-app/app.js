@@ -24,8 +24,13 @@ app.get('/off', function (req, res) {
   	res.send("turnedOff");
 });
 
+app.get('/status', function (req, res) {
+  var isOn = piInterface.isOn() ? 'on' : 'off';
+  res.send(JSON.stringify({temperature: '30', status: isOn}));
+});
+
+
 job.start();
 
-app.listen(3000, '127.0.0.3', () => console.log('Listening'));
+app.listen(port, () => console.log('Listening'));
 
-// app.listen(port, () => console.log('Listening'));
