@@ -15,6 +15,9 @@ turnLEDOff: function () {
   } else {
     LED.writeSync(1);
   }
- }
+ },
+isOn: function() {
+  return LED.readSync() === 1;
+}
 }
 
