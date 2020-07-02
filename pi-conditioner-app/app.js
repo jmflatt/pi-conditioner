@@ -26,7 +26,8 @@ app.get('/off', function (req, res) {
 
 app.get('/status', function (req, res) {
   var isOn = piInterface.isOn() ? 'on' : 'off';
-  res.send(JSON.stringify({temperature: '30', status: isOn}));
+  var temp = piInterface.getTemperature();
+  res.send(JSON.stringify({temperature: temp.toString(), status: isOn}));
 });
 
 
