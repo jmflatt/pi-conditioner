@@ -6,6 +6,11 @@ module.exports = {
 turnLEDOn: function () {
 
   const currentTemp = getTemperature();
+  if (currentTemp.temperature < 24) 
+  {
+   console.log(`Current Temp ${currentTemp.temperature.toFixed(1)} is Low enough, not turning on`);
+    return;
+  }
   console.log(currentTemp.temperature);
   console.log('turning led on');
   if (LED.readSync() === 0) {
