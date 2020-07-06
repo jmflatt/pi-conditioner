@@ -33,7 +33,7 @@ app.get('/off', function (req, res) {
 app.get('/status', function (req, res) {
   var isOn = piInterface.isOn() ? 'on' : 'off';
   var temp = piInterface.getTemperature();
-  res.send(JSON.stringify({ temperature: temp.toString(), status: isOn }));
+  res.send(JSON.stringify({ temperature: temp.temperature.toString(), humidity: temp.humidity.toString(), status: isOn }));
 });
 
 // console.log(`cron job enabled: ${useCronJob}`);
