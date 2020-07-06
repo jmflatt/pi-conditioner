@@ -7,7 +7,7 @@ turnLEDOn: function () {
 
   const currentTemp = getTemperature();
   console.log(currentTemp.temperature);
-  
+
   console.log('turning led on');
   if (LED.readSync() === 0) {
     console.log('turned led on');
@@ -30,7 +30,8 @@ isOn: function() {
 getTemperature: function() {
   tempSensor.read(11, 4, function(err, temperature, humidity) {
     if (err) {
-      return "0.0"
+      console.log(err)
+      return {temperature: 0.0, humidity: 0.0};
     }
     return {temperature: temperature, humidity: humidity};
   });
