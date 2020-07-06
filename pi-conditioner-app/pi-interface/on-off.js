@@ -21,6 +21,7 @@ getTemperature: function() {
     // });
   },
 turnLEDOn: function () {
+  console.log("checking current temp before turning on");
   const currentTemp = this.getTemperature();
   if (currentTemp.temperature < 24) 
   {

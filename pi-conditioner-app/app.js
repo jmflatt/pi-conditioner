@@ -19,12 +19,14 @@ const useCronJob = process.argv[2] == 'useCron';
 app.get('/', (req, res) => res.send('hello world'));
 
 app.get('/on', function (req, res) {
+  console.log('api called to turn pi on');
   piInterface.turnLEDOn();
   var isOn = piInterface.isOn() ? 'on' : 'off';
   res.send(JSON.stringify({ success: true, status: isOn }));
 });
 
 app.get('/off', function (req, res) {
+  console.log('api called to turn pi off');
   piInterface.turnLEDOff();
   var isOn = piInterface.isOn() ? 'on' : 'off';
   res.send(JSON.stringify({ success: true, status: isOn }));
