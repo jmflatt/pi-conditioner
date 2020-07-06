@@ -21,7 +21,7 @@ getTemperature: function() {
     // });
   },
 turnLEDOn: function () {
-  const currentTemp = getTemperature();
+  const currentTemp = this.getTemperature();
   if (currentTemp.temperature < 24) 
   {
    console.log(`Current Temp ${currentTemp.temperature.toFixed(1)} is Low enough, not turning on`);
