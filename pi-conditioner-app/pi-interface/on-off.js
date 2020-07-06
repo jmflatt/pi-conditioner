@@ -1,7 +1,6 @@
 var Gpio = require('onoff').Gpio;
 var LED = new Gpio(17,'out');
 const tempSensor = require('node-dht-sensor');
-tempSensor.initialize(22, 4);
 
 module.exports = {
 turnLEDOn: function () {
@@ -29,14 +28,19 @@ isOn: function() {
 },
 
 getTemperature: function() {
-  tempSensor.read(22, 4, function(err, temperature, humidity) {
-    if (err) {
-      console.log(err)
-      return {temperature: 0.0, humidity: 0.0};
-    }
-    console.log(temperature);
-    return {temperature: temperature, humidity: humidity};
-  });
+  tempSensor.initialize(22, 4);
+
+  var readout = tempSensor.read(22, 4);
+  return {temperature: readout.temperature.toFixed(1), humidity: readout.humidity.toFixed(1)};
+
+  // tempSensor.read(22, 4, function(err, temperature, humidity) {
+  //   if (err) {
+  //     console.log(err)
+  //     return {temperature: 0.0, humidity: 0.0};
+  //   }
+  //   console.log(temperature);
+  //   return {temperature: temperature, humidity: humidity};
+  // });
 }
 }
 
