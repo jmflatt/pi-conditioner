@@ -1,5 +1,5 @@
 var Gpio = require('onoff').Gpio;
-var LED = new Gpio(4,'out');
+var LED = new Gpio(17,'out');
 
 module.exports = {
 turnLEDOn: function () {

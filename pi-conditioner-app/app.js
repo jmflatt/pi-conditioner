@@ -5,16 +5,16 @@ const piInterface = require('./pi-interface/on-off');
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
 
-if (useCronJob) {
-  const job = new CronJob('* * * * *', function () {
-    if ((!piInterface.isOn()) && piInterface.getTemperature() > 24) {
-      piInterface.turnLEDOn();
-    } else if ((piInterface.isOn()) && piInterface.getTemperature() < 20) {
-      piInterface.turnLEDOff();
-    }
-  }, null, true, 'America/Chicago');
-  job.start();
-}
+// if (useCronJob) {
+//   const job = new CronJob('* * * * *', function () {
+//     if ((!piInterface.isOn()) && piInterface.getTemperature() > 24) {
+//       piInterface.turnLEDOn();
+//     } else if ((piInterface.isOn()) && piInterface.getTemperature() < 20) {
+//       piInterface.turnLEDOff();
+//     }
+//   }, null, true, 'America/Chicago');
+//   job.start();
+// }
 
 app.get('/', (req, res) => res.send('hello world'));
 
@@ -36,7 +36,7 @@ app.get('/status', function (req, res) {
   res.send(JSON.stringify({ temperature: temp.toString(), status: isOn }));
 });
 
-console.log(`cron job enabled: ${useCronJob}`);
+// console.log(`cron job enabled: ${useCronJob}`);
 
 app.listen(port, '192.168.1.94',  () => console.log('Listening'));
 

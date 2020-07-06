@@ -35,6 +35,7 @@ class HomeScreen extends React.Component {
             response = await service.togglePower('on');
             await this.setState({ status: response.status });
         }
+        
     }
 
     render() {
