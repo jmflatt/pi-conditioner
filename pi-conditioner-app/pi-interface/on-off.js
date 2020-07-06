@@ -28,11 +28,14 @@ isOn: function() {
 },
 
 getTemperature: function() {
+  console.log('here');
   return tempSensor.read(11, 4, function(err, temperature, humidity) {
+    console.log('here 2');
     if (err) {
       console.log(err)
       return {temperature: 0.0, humidity: 0.0};
     }
+    console.log(temperature);
     return {temperature: temperature, humidity: humidity};
   });
 }
