@@ -16,7 +16,7 @@ class HomeScreen extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = { temperature: '', status: '', humidity: '' };
+        this.state = { temperature: '', status: '', humidity: '', error: false };
     }
 
     async componentDidMount() {
@@ -25,7 +25,11 @@ class HomeScreen extends React.Component {
 
     async getRoomInformation() {
         const result = await service.getCurrentStatus();
-        await this.setState({ temperature: result.temperature, status: result.status, humidity: result.humidity });
+        if (result.error) {
+            await this.setState({ temperature: result.temperature, status: result.status, humidity: result.humidity, error: true });
+        } else {
+            await this.setState({ temperature: result.temperature, status: result.status, humidity: result.humidity, error: false });
+        }
     }
 
     async toggleAcStatus() {
@@ -37,7 +41,7 @@ class HomeScreen extends React.Component {
             response = await service.togglePower('on');
             await this.setState({ status: response.status });
         }
-        
+
     }
 
     async sendSQSMessageToQueue() {
@@ -47,49 +51,58 @@ class HomeScreen extends React.Component {
     render() {
         return (
             <View>
-                <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}>Current Temperature</Text>
-                    <Text style={styles.sectionDescription}>
-                        {this.state.temperature + '\u00b0' + ' Celcius'} 
-                    </Text>
-                </View>
-                <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}>Current Humidity</Text>
-                    <Text style={styles.sectionDescription}>
-                        {this.state.humidity + '\u00b0' + '%'} 
-                    </Text>
-                </View>
-                <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}>Current Status</Text>
-                    <Text style={styles.sectionDescription}>
-                        {this.state.status}
-                    </Text>
-                </View>
-                <View style={styles.sectionContainer}>
-                    <TouchableOpacity
-                        style={styles.toggleACButton}
-                        onPress={() => this.toggleAcStatus()}
-                    >
-                        <Text style={styles.buttonText}>{this.state.status == 'on' ? 'Turn AC Off' : 'Turn AC On'}</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.sectionContainer}>
-                    <TouchableOpacity
-                        style={styles.toggleACButton}
-                        onPress={() => this.getRoomInformation()}
-                    >
-                        <Text style={styles.buttonText}>Refresh AC Status</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.sectionContainer}>
-                    <TouchableOpacity
-                        style={styles.toggleACButton}
-                        onPress={() => this.sendSQSMessageToQueue()}
-                    >
-                        <Text style={styles.buttonText}> Request Remote Status</Text>
-                    </TouchableOpacity>
-                </View>
+                {!this.state.error ?
+                    <View>
+                        <View style={styles.sectionContainer}>
+                            <Text style={styles.sectionTitle}>Current Temperature</Text>
+                            <Text style={styles.sectionDescription}>
+                                {this.state.temperature + '\u00b0' + ' Celcius'}
+                            </Text>
+                        </View>
+                        <View style={styles.sectionContainer}>
+                            <Text style={styles.sectionTitle}>Current Humidity</Text>
+                            <Text style={styles.sectionDescription}>
+                                {this.state.humidity + '%'}
+                            </Text>
+                        </View>
+                        <View style={styles.sectionContainer}>
+                            <Text style={styles.sectionTitle}>Current Status</Text>
+                            <Text style={styles.sectionDescription}>
+                                {this.state.status}
+                            </Text>
+                        </View>
+                        <View style={styles.sectionContainer}>
+                            <TouchableOpacity
+                                style={styles.toggleACButton}
+                                onPress={() => this.toggleAcStatus()}
+                            >
+                                <Text style={styles.buttonText}>{this.state.status == 'on' ? 'Turn AC Off' : 'Turn AC On'}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.sectionContainer}>
+                            <TouchableOpacity
+                                style={styles.toggleACButton}
+                                onPress={() => this.getRoomInformation()}
+                            >
+                                <Text style={styles.buttonText}>Refresh AC Status</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    :
+                    <View>
+                        <View style={styles.sectionContainer}>
+                            <Text style={styles.sectionTitle}>Currently Not On the AC Network</Text>
+                        </View>
+                        <View style={styles.sectionContainer}>
+                            <TouchableOpacity
+                                style={styles.toggleACButton}
+                                onPress={() => this.sendSQSMessageToQueue()}
+                            >
+                                <Text style={styles.buttonText}> Request Remote Status</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                }
             </View>
         );
     }

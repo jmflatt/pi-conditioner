@@ -5,7 +5,6 @@
  * @format
  * @flow strict-local
  */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -46,10 +45,7 @@ const App: () => React$Node = () => {
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
-          
-
           <View style={styles.body}>
-
           <HomeScreen/>
           </View>
         </ScrollView>
