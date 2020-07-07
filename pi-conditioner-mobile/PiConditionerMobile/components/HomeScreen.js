@@ -14,7 +14,7 @@ class HomeScreen extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = { temperature: '', status: '' };
+        this.state = { temperature: '', status: '', humidity: '' };
     }
 
     async componentDidMount() {
@@ -23,7 +23,7 @@ class HomeScreen extends React.Component {
 
     async getRoomInformation() {
         const result = await service.getCurrentStatus();
-        await this.setState({ temperature: result.temperature, status: result.status });
+        await this.setState({ temperature: result.temperature, status: result.status, humidity: result.humidity });
     }
 
     async toggleAcStatus() {
@@ -45,6 +45,12 @@ class HomeScreen extends React.Component {
                     <Text style={styles.sectionTitle}>Current Temperature</Text>
                     <Text style={styles.sectionDescription}>
                         {this.state.temperature + '\u00b0' + ' Celcius'} 
+                    </Text>
+                </View>
+                <View style={styles.sectionContainer}>
+                    <Text style={styles.sectionTitle}>Current Humidity</Text>
+                    <Text style={styles.sectionDescription}>
+                        {this.state.humidity + '\u00b0' + '%'} 
                     </Text>
                 </View>
                 <View style={styles.sectionContainer}>

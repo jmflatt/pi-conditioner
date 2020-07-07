@@ -2,8 +2,53 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const piInterface = require('./pi-interface/on-off');
+const AWS = require('aws-sdk');
+AWS.config.update({region: 'us-east-2'});
+const jsonConfig = require('appsettings.json');
+const snsClient = require('snsClient');
+
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
+
+const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
+const queueURL = jsonConfig.SQSQueueURL;
+
+var params = {
+  AttributeNames: [
+     "SentTimestamp"
+  ],
+  MaxNumberOfMessages: 10,
+  MessageAttributeNames: [
+     "All"
+  ],
+  QueueUrl: queueURL,
+  VisibilityTimeout: 20,
+  WaitTimeSeconds: 0
+ };
+
+ sqs.receiveMessage(params, function(err, data) {
+  if (err) {
+    console.log("Received Error", err);
+  } else if (data.Messages) {
+    console.log(data.Messages[0].Body);
+
+    if (JSON.parse(data.Messages[0].Body).getStatus) {
+      snsClient.sendSnsMessage();
+    }
+
+    var deleteParams = {
+      QueueUrl: queueURL,
+      ReceiptHandle: data.Messages[0].ReceiptHandle
+    };
+    sqs.deleteMessage(deleteParams, function(err, data) {
+      if (err) {
+        console.log("Delete Error", err);
+      } else {
+        console.log("Message Deleted", data);
+      }
+    });
+  }
+});
 
 // if (useCronJob) {
 //   const job = new CronJob('* * * * *', function () {
