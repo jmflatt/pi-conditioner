@@ -1,11 +1,15 @@
+//import my stuff
+const piInterface = require('./pi-interface/on-off');
+const jsonConfig = require('./appsettings.json');
+const snsClient = require('./snsClient');
+//express stuff
 const express = require('express');
 const app = express();
 const port = 3000;
-const piInterface = require('./pi-interface/on-off');
+//aws stuff
 const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-2'});
-const jsonConfig = require('./appsettings.json');
-const snsClient = require('snsClient');
+
 
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
