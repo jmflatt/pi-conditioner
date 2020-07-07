@@ -18,17 +18,16 @@ const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 const queueURL = jsonConfig.SQSQueueURL;
 
 var params = {
-  AttributeNames: [
-     "SentTimestamp"
-  ],
-  MaxNumberOfMessages: 10,
-  MessageAttributeNames: [
-     "All"
-  ],
-  QueueUrl: queueURL,
-  VisibilityTimeout: 20,
-  WaitTimeSeconds: 20
- };
+ AttributeNames: [
+    "SentTimestamp"
+ ],
+ MaxNumberOfMessages: 1,
+ MessageAttributeNames: [
+    "All"
+ ],
+ QueueUrl: queueURL,
+ WaitTimeSeconds: 20
+};
 
  sqs.receiveMessage(params, function(err, data) {
   if (err) {
