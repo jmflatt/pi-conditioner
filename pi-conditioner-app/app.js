@@ -17,6 +17,12 @@ const useCronJob = process.argv[2] == 'useCron';
 const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 const queueURL = jsonConfig.SQSQueueURL;
 
+async.parallel([
+  pollMessage,
+], function(err, callbacks) {
+  readMessages();
+});
+
 var params = {
  AttributeNames: [
     "SentTimestamp"
@@ -29,6 +35,7 @@ var params = {
  WaitTimeSeconds: 20
 };
 
+function pollMessage() {
  sqs.receiveMessage(params, function(err, data) {
   if (err) {
     console.log("Received Error", err);
@@ -52,6 +59,7 @@ var params = {
     });
   }
 });
+}
 
 // if (useCronJob) {
 //   const job = new CronJob('* * * * *', function () {
