@@ -17,6 +17,7 @@ module.exports = {
     console.log("PiInterface: checking current temp before turning on");
     const currentTemp = this.getTemperature();
     if (currentTemp.temperature < 24) {
+      console.log('PiInterface: current temp not warm enough to need AC');
       return;
     }
     console.log(currentTemp.temperature);
