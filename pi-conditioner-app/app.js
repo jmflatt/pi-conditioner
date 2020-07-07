@@ -27,7 +27,7 @@ var params = {
   ],
   QueueUrl: queueURL,
   VisibilityTimeout: 20,
-  WaitTimeSeconds: 0
+  WaitTimeSeconds: 20
  };
 
  sqs.receiveMessage(params, function(err, data) {
