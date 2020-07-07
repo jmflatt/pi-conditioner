@@ -17,13 +17,14 @@ const useCronJob = process.argv[2] == 'useCron';
 const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 const queueURL = jsonConfig.SQSQueueURL;
 
-const app = Consumer.create({
+const listener = Consumer.create({
   queueUrl: queueURL,
   handleMessage: async (message) => {
     snsClient.sendSnsMessage();
   }
 });
 
+listener.start();
 
 // var params = {
 //  AttributeNames: [
