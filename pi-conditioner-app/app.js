@@ -32,11 +32,11 @@ if (useCronJob) {
   const job = new CronJob('* */5 * * * *', function () {
     console.log('Cron: kicking off ac temp check');
     const temp = piInterface.getTemperature();
-    
-    if ((!piInterface.isOn()) &&  currTemp > 24) {
+
+    if ((!piInterface.isOn()) &&  temp.temperature > 24) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac on`);
       piInterface.turnLEDOn();
-    } else if ((piInterface.isOn()) && currTemp < 23) {
+    } else if ((piInterface.isOn()) && temp.temperature < 23) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac off`);
       piInterface.turnLEDOff();
     }
