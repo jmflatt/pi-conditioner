@@ -1,5 +1,5 @@
 module.exports = {
-    sendSnsMessage = function() {
+    sendSnsMessage: function() {
         console.log('send a text');
     }
 }
