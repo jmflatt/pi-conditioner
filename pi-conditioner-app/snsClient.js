@@ -10,7 +10,7 @@ module.exports = {
             Message: `Status: ${isOn}. Current Temperature: ${temp.temperature}. Current Humidity: ${temp.humidity}`, /* required */
             PhoneNumber: '+15138335254'
           };
-          var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+          var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31', region: 'us-east-1'}).publish(params).promise();
 
         publishTextPromise.then(
         function(data) {
