@@ -68,6 +68,6 @@ app.get('/status', function (req, res) {
 });
 
 // console.log(`cron job enabled: ${useCronJob}`);
-
-app.listen(port, '192.168.1.94', () => console.log('Listening'));
+const startupTime = moment().format('yyyy-mm-dd:hh:mm:ss');
+app.listen(port, '192.168.1.94', () => console.log(`Started Listening - ${startupTime}`));
 
