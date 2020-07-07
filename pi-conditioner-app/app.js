@@ -32,13 +32,12 @@ if (useCronJob) {
   const job = new CronJob('* */5 * * * *', function () {
     console.log('Cron: kicking off ac temp check');
     const temp = piInterface.getTemperature();
-    const currTemp = temp.temperature.toFixed(1);
-
+    
     if ((!piInterface.isOn()) &&  currTemp > 24) {
-      console.log(`Cron: temp check recorded: ${currTemp} turning ac on`);
+      console.log(`Cron: temp check recorded: ${temp.temperature} turning ac on`);
       piInterface.turnLEDOn();
     } else if ((piInterface.isOn()) && currTemp < 23) {
-      console.log(`Cron: temp check recorded: ${currTemp} turning ac off`);
+      console.log(`Cron: temp check recorded: ${temp.temperature} turning ac off`);
       piInterface.turnLEDOff();
     }
   }, null, true, 'America/Chicago');

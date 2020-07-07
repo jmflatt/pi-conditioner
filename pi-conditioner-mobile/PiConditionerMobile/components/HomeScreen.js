@@ -45,7 +45,7 @@ class HomeScreen extends React.Component {
     }
 
     async sendSQSMessageToQueue() {
-        await sqs.sendSQSMessage();
+        await sqs.sendSQSMessage(); 
     }
 
     render() {
