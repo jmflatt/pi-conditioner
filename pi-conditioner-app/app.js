@@ -29,10 +29,9 @@ const listener = Consumer.create({
 listener.start();
 
 if (useCronJob) {
-  const job = new CronJob('* */5 * * * *', function () {
+  const job = new CronJob('*/5 * * * *', function () {
     console.log('Cron: kicking off ac temp check');
     const temp = piInterface.getTemperature();
-
     if ((!piInterface.isOn()) &&  temp.temperature > 24) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac on`);
       piInterface.turnLEDOn();
