@@ -6,8 +6,8 @@ const snsClient = require('./snsClient');
 const express = require('express');
 const app = express();
 const port = 3000;
-var async = require("async");
 //aws stuff
+const { Consumer } = require('sqs-consumer');
 const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-2'});
 
@@ -17,49 +17,51 @@ const useCronJob = process.argv[2] == 'useCron';
 const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 const queueURL = jsonConfig.SQSQueueURL;
 
-async.parallel([
-  pollMessage,
-], function(err, callbacks) {
-  readMessages();
-});
-
-var params = {
- AttributeNames: [
-    "SentTimestamp"
- ],
- MaxNumberOfMessages: 1,
- MessageAttributeNames: [
-    "All"
- ],
- QueueUrl: queueURL,
- WaitTimeSeconds: 20
-};
-
-function pollMessage() {
- sqs.receiveMessage(params, function(err, data) {
-  if (err) {
-    console.log("Received Error", err);
-  } else if (data.Messages) {
-    console.log(data.Messages[0].Body);
-
-    if (JSON.parse(data.Messages[0].Body).getStatus) {
-      snsClient.sendSnsMessage();
-    }
-
-    var deleteParams = {
-      QueueUrl: queueURL,
-      ReceiptHandle: data.Messages[0].ReceiptHandle
-    };
-    sqs.deleteMessage(deleteParams, function(err, data) {
-      if (err) {
-        console.log("Delete Error", err);
-      } else {
-        console.log("Message Deleted", data);
-      }
-    });
+const app = Consumer.create({
+  queueUrl: queueURL,
+  handleMessage: async (message) => {
+    snsClient.sendSnsMessage();
   }
 });
-}
+
+
+// var params = {
+//  AttributeNames: [
+//     "SentTimestamp"
+//  ],
+//  MaxNumberOfMessages: 1,
+//  MessageAttributeNames: [
+//     "All"
+//  ],
+//  QueueUrl: queueURL,
+//  WaitTimeSeconds: 20
+// };
+
+// function pollMessage() {
+//  sqs.receiveMessage(params, function(err, data) {
+//   if (err) {
+//     console.log("Received Error", err);
+//   } else if (data.Messages) {
+//     console.log(data.Messages[0].Body);
+
+//     if (JSON.parse(data.Messages[0].Body).getStatus) {
+//       snsClient.sendSnsMessage();
+//     }
+
+//     var deleteParams = {
+//       QueueUrl: queueURL,
+//       ReceiptHandle: data.Messages[0].ReceiptHandle
+//     };
+//     sqs.deleteMessage(deleteParams, function(err, data) {
+//       if (err) {
+//         console.log("Delete Error", err);
+//       } else {
+//         console.log("Message Deleted", data);
+//       }
+//     });
+//   }
+// });
+// }
 
 // if (useCronJob) {
 //   const job = new CronJob('* * * * *', function () {

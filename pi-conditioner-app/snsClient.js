@@ -1,5 +1,5 @@
 module.exports = {
-    sendSnsMessage: function() {
+    sendSnsMessage: async function() {
         console.log('send a text');
     }
 }
