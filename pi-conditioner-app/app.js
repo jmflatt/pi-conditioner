@@ -6,10 +6,10 @@ const snsClient = require('./snsClient');
 const express = require('express');
 const app = express();
 const port = 3000;
+var async = require("async");
 //aws stuff
 const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-2'});
-
 
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
