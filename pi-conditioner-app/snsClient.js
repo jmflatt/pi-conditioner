@@ -1,3 +1,4 @@
+var configJson = require('./appsettings.json');
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Set region
@@ -8,7 +9,7 @@ module.exports = {
     sendSnsMessage: async function(temp, isOn) {
         const params = {
             Message: `Status: ${isOn}. Current Temperature: ${temp.temperature}. Current Humidity: ${temp.humidity}`, /* required */
-            PhoneNumber: '+15138335254'
+            PhoneNumber: configJson.SMSPhoneNumber
           };
           var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31', region: 'us-east-1'}).publish(params).promise();
 
