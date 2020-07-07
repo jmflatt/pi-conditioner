@@ -28,28 +28,34 @@ const listener = Consumer.create({
 
 listener.start();
 
-// if (useCronJob) {
-//   const job = new CronJob('* * * * *', function () {
-//     if ((!piInterface.isOn()) && piInterface.getTemperature() > 24) {
-//       piInterface.turnLEDOn();
-//     } else if ((piInterface.isOn()) && piInterface.getTemperature() < 20) {
-//       piInterface.turnLEDOff();
-//     }
-//   }, null, true, 'America/Chicago');
-//   job.start();
-// }
+if (useCronJob) {
+  const job = new CronJob('* */5 * * * *', function () {
+    console.log('Cron: kicking off ac temp check');
+    const temp = piInterface.getTemperature();
+    const currTemp = temp.temperature.toFixed(1);
+
+    if ((!piInterface.isOn()) &&  currTemp > 24) {
+      console.log(`Cron: temp check recorded: ${currTemp} turning ac on`);
+      piInterface.turnLEDOn();
+    } else if ((piInterface.isOn()) && currTemp < 23) {
+      console.log(`Cron: temp check recorded: ${currTemp} turning ac off`);
+      piInterface.turnLEDOff();
+    }
+  }, null, true, 'America/Chicago');
+  job.start();
+}
 
 app.get('/', (req, res) => res.send('hello world'));
 
 app.get('/on', function (req, res) {
-  console.log('api called to turn pi on');
+  console.log('API: called to turn pi on');
   piInterface.turnLEDOn();
   var isOn = piInterface.isOn() ? 'on' : 'off';
   res.send(JSON.stringify({ success: true, status: isOn }));
 });
 
 app.get('/off', function (req, res) {
-  console.log('api called to turn pi off');
+  console.log('API: called to turn pi off');
   piInterface.turnLEDOff();
   var isOn = piInterface.isOn() ? 'on' : 'off';
   res.send(JSON.stringify({ success: true, status: isOn }));
