@@ -30,8 +30,9 @@ const listener = Consumer.create({
 listener.start();
 
 if (useCronJob) {
+  console.log(`cron job enabled`);
   const job = new CronJob('*/5 * * * *', function () {
-    const dateTime = moment().format('yyyy-mm-dd:hh:mm:ss');
+    const dateTime = moment().format('MM/DD/YYYY:HH:mm:ss');
     console.log(`Cron: kicking off ac temp check ${dateTime}`);
     const temp = piInterface.getTemperature();
     if ((!piInterface.isOn()) && temp.temperature > 24) {
@@ -67,7 +68,7 @@ app.get('/status', function (req, res) {
   res.send(JSON.stringify({ temperature: temp.temperature.toString(), humidity: temp.humidity.toString(), status: isOn }));
 });
 
-// console.log(`cron job enabled: ${useCronJob}`);
-const startupTime = moment().format('yyyy-mm-dd:hh:mm:ss');
+
+const startupTime = moment().format('MM/DD/YYYY:HH:mm:ss');
 app.listen(port, '192.168.1.94', () => console.log(`Started Listening - ${startupTime}`));
 
