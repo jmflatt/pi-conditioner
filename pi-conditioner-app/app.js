@@ -20,49 +20,13 @@ const queueURL = jsonConfig.SQSQueueURL;
 const listener = Consumer.create({
   queueUrl: queueURL,
   handleMessage: async (message) => {
-    snsClient.sendSnsMessage();
+    var temp = piInterface.getTemperature();
+    var isOn = piInterface.isOn() ? 'on' : 'off';
+    snsClient.sendSnsMessage(temp, isOn);
   }
 });
 
 listener.start();
-
-// var params = {
-//  AttributeNames: [
-//     "SentTimestamp"
-//  ],
-//  MaxNumberOfMessages: 1,
-//  MessageAttributeNames: [
-//     "All"
-//  ],
-//  QueueUrl: queueURL,
-//  WaitTimeSeconds: 20
-// };
-
-// function pollMessage() {
-//  sqs.receiveMessage(params, function(err, data) {
-//   if (err) {
-//     console.log("Received Error", err);
-//   } else if (data.Messages) {
-//     console.log(data.Messages[0].Body);
-
-//     if (JSON.parse(data.Messages[0].Body).getStatus) {
-//       snsClient.sendSnsMessage();
-//     }
-
-//     var deleteParams = {
-//       QueueUrl: queueURL,
-//       ReceiptHandle: data.Messages[0].ReceiptHandle
-//     };
-//     sqs.deleteMessage(deleteParams, function(err, data) {
-//       if (err) {
-//         console.log("Delete Error", err);
-//       } else {
-//         console.log("Message Deleted", data);
-//       }
-//     });
-//   }
-// });
-// }
 
 // if (useCronJob) {
 //   const job = new CronJob('* * * * *', function () {

@@ -1,5 +1,5 @@
 module.exports = {
-    sendSnsMessage: async function() {
-        console.log('send a text');
+    sendSnsMessage: async function(temp, isOn) {
+        console.log(`Status: ${isOn}. Current Temperature: ${temp.temperature}. Current Humidity: ${temp.humidity}`);
     }
 }

@@ -9,6 +9,8 @@ import {
     DebugInstructions,
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import sqsService from '../services/sqs-service';
+const sqs = new sqsService();
 
 class HomeScreen extends React.Component {
     constructor(props) {
@@ -36,6 +38,10 @@ class HomeScreen extends React.Component {
             await this.setState({ status: response.status });
         }
         
+    }
+
+    async sendSQSMessageToQueue() {
+        await sqs.sendSQSMessage();
     }
 
     render() {
@@ -73,6 +79,15 @@ class HomeScreen extends React.Component {
                         onPress={() => this.getRoomInformation()}
                     >
                         <Text style={styles.buttonText}>Refresh AC Status</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.sectionContainer}>
+                    <TouchableOpacity
+                        style={styles.toggleACButton}
+                        onPress={() => this.sendSQSMessageToQueue()}
+                    >
+                        <Text style={styles.buttonText}> Request Remote Status</Text>
                     </TouchableOpacity>
                 </View>
             </View>
