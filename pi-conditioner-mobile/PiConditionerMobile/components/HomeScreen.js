@@ -28,7 +28,8 @@ class HomeScreen extends React.Component {
         if (result.error) {
             await this.setState({ temperature: result.temperature, status: result.status, humidity: result.humidity, error: true });
         } else {
-            await this.setState({ temperature: result.temperature, status: result.status, humidity: result.humidity, error: false });
+            const formattedTemp = (result.temperature * 9/5) + 32;
+            await this.setState({ temperature: formattedTemp, status: result.status, humidity: result.humidity, error: false });
         }
     }
 
@@ -56,7 +57,7 @@ class HomeScreen extends React.Component {
                         <View style={styles.sectionContainer}>
                             <Text style={styles.sectionTitle}>Current Temperature</Text>
                             <Text style={styles.sectionDescription}>
-                                {this.state.temperature + '\u00b0' + ' Celcius'}
+                                {this.state.temperature + '\u00b0' + ' Fahrenheit'}
                             </Text>
                         </View>
                         <View style={styles.sectionContainer}>
