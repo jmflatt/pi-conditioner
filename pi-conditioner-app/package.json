@@ -15,6 +15,7 @@
     "cron": "^1.8.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "moment": "^2.27.0",
     "node-dht-sensor": "^0.4.2",
     "onoff": "^6.0.0",
     "sqs-consumer": "^5.4.0"

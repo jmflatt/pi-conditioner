@@ -9,12 +9,13 @@ const port = 3000;
 //aws stuff
 const { Consumer } = require('sqs-consumer');
 const AWS = require('aws-sdk');
-AWS.config.update({region: 'us-east-2'});
-
+AWS.config.update({ region: 'us-east-2' });
+//other requires
+var moment = require('moment');
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
 
-const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
+const sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
 const queueURL = jsonConfig.SQSQueueURL;
 
 const listener = Consumer.create({
@@ -30,9 +31,10 @@ listener.start();
 
 if (useCronJob) {
   const job = new CronJob('*/5 * * * *', function () {
-    console.log('Cron: kicking off ac temp check');
+    const dateTime = moment().format('yyyy-mm-dd:hh:mm:ss');
+    console.log(`Cron: kicking off ac temp check ${dateTime}`);
     const temp = piInterface.getTemperature();
-    if ((!piInterface.isOn()) &&  temp.temperature > 24) {
+    if ((!piInterface.isOn()) && temp.temperature > 24) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac on`);
       piInterface.turnLEDOn();
     } else if ((piInterface.isOn()) && temp.temperature < 23) {
@@ -67,5 +69,5 @@ app.get('/status', function (req, res) {
 
 // console.log(`cron job enabled: ${useCronJob}`);
 
-app.listen(port, '192.168.1.94',  () => console.log('Listening'));
+app.listen(port, '192.168.1.94', () => console.log('Listening'));
 
