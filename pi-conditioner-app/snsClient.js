@@ -9,6 +9,7 @@ module.exports = {
         const params = {
             Message: `Status: ${isOn}. Current Temperature: ${temp.temperature}. Current Humidity: ${temp.humidity}`, /* required */
             PhoneNumber: '+15138335254',
+            Topic
           };
           var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
 
