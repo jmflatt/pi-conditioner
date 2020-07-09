@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
-const apiUrl = 'http://192.168.1.94:3000/';
+const configJson = require('../appsettings.json');
+const apiUrl = configJson.APIUrl;
 
 export default class PiService {
 

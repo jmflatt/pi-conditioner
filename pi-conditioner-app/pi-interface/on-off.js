@@ -1,6 +1,8 @@
 var Gpio = require('onoff').Gpio;
 var LED = new Gpio(17, 'out');
 const tempSensor = require('node-dht-sensor');
+const jsonConfig = require('../appsettings.json');
+
 
 module.exports = {
 
@@ -16,8 +18,8 @@ module.exports = {
   turnLEDOn: function () {
     console.log("PiInterface: checking current temp before turning on");
     const currentTemp = this.getTemperature();
-    if (currentTemp.temperature < 24) {
-      console.log('PiInterface: current temp not warm enough to need AC');
+    if (currentTemp.temperature < jsonConfig.TurnOnTemp) {
+      console.log('PiInterface: current temp not warm enough to need AC. Configured with TurnOnTemp in appsettings');
       return;
     }
     console.log(currentTemp.temperature);

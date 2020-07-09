@@ -3,22 +3,21 @@ import { Text } from 'react-native';
 const AWS = require('aws-sdk');
 const configJson = require('../appsettings.json')
 
-const creds = new AWS.CognitoIdentityCredentials({region: 'east-us-2', RoleArn: configJson.RoleArn});
+const creds = new AWS.CognitoIdentityCredentials({region: configJson.SQSRegion, RoleArn: configJson.RoleArn});
 AWS.config.update({
-    region: 'us-east-2', 
+    region: configJson.SQSRegion, 
     accessKeyId: configJson.AccessKeyId,
     secretAccessKey: configJson.SecretAccessKey
     // credentials: creds,
 });
 
 const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
-const jsonConfig = require('../appsettings.json');
 
 export default class sqsService {
     
     async sendSQSMessage() {
         const params = {
-            DelaySeconds: 10,
+            DelaySeconds: 5,
             MessageBody: JSON.stringify({getStatus: true}),
             QueueUrl: jsonConfig.SQSQueueURL
           };

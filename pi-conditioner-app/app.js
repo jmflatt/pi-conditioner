@@ -9,7 +9,7 @@ const port = 3000;
 //aws stuff
 const { Consumer } = require('sqs-consumer');
 const AWS = require('aws-sdk');
-AWS.config.update({ region: 'us-east-2' });
+AWS.config.update({ region: jsonConfig.SQSRegion });
 //other requires
 var moment = require('moment');
 const CronJob = require('cron').CronJob;
@@ -35,10 +35,10 @@ if (useCronJob) {
     const dateTime = moment().format('MM/DD/YYYY:HH:mm:ss');
     console.log(`Cron: kicking off ac temp check ${dateTime}`);
     const temp = piInterface.getTemperature();
-    if ((!piInterface.isOn()) && temp.temperature > 24) {
+    if ((!piInterface.isOn()) && temp.temperature > jsonConfig.TurnOnTemp) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac on`);
       piInterface.turnLEDOn();
-    } else if ((piInterface.isOn()) && temp.temperature < 23) {
+    } else if ((piInterface.isOn()) && temp.temperature < jsonConfig.TurnOffTemp) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac off`);
       piInterface.turnLEDOff();
     }
@@ -70,5 +70,5 @@ app.get('/status', function (req, res) {
 
 
 const startupTime = moment().format('MM/DD/YYYY:HH:mm:ss');
-app.listen(port, '192.168.1.94', () => console.log(`Started Listening - ${startupTime}`));
+app.listen(port, jsonConfig.NetworkAddress, () => console.log(`Started Listening - ${startupTime}`));
 
