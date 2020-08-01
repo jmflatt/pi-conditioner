@@ -37,10 +37,10 @@ if (useCronJob) {
     const temp = piInterface.getTemperature();
     if ((!piInterface.isOn()) && temp.temperature > jsonConfig.TurnOnTemp) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac on`);
-      piInterface.turnLEDOn();
+      piInterface.toggleAcPowerOn();
     } else if ((piInterface.isOn()) && temp.temperature < jsonConfig.TurnOffTemp) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac off`);
-      piInterface.turnLEDOff();
+      piInterface.toggleAcPowerOff();
     }
   }, null, true, 'America/Chicago');
   job.start();

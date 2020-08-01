@@ -19,7 +19,7 @@ import {
   ImageBackground
 } from 'react-native';
 
-import {
+import { 
   LearnMoreLinks,
   Colors,
   DebugInstructions,
