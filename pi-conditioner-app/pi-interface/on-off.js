@@ -1,5 +1,5 @@
 var Gpio = require('onoff').Gpio;
-var LED = new Gpio(17, 'out');
+var LED = new Gpio(18, 'high');
 const tempSensor = require('node-dht-sensor');
 const jsonConfig = require('../appsettings.json');
 
@@ -15,6 +15,7 @@ module.exports = {
 
     return { temperature: readout.temperature.toFixed(1), humidity: readout.humidity.toFixed(1) };
   },
+
   turnLEDOn: function () {
     console.log("PiInterface: checking current temp before turning on");
     const currentTemp = this.getTemperature();
