@@ -25,17 +25,17 @@ module.exports = {
     }
     console.log(currentTemp.temperature);
     console.log('PiInterface: turning led on');
-    if (LED.readSync() === 0) {
+    if (LED.readSync() === 1) {
       console.log('PiInterface: turned led on');
-      LED.writeSync(1);
+      LED.writeSync(0);
     }
   },
 
   turnLEDOff: function () {
     console.log('PiInterface: turning led off');
-    if (LED.readSync() === 1) {
+    if (LED.readSync() === 0) {
       console.log('PiInterface: turned led off');
-      LED.writeSync(0);
+      LED.writeSync(1);
     }
   },
 
