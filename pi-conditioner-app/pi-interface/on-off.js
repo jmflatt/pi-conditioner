@@ -16,6 +16,22 @@ module.exports = {
     return { temperature: readout.temperature.toFixed(1), humidity: readout.humidity.toFixed(1) };
   },
 
+  toggleAcPower: async function () {
+    // const currentTemp = this.getTemperature();
+    // if (currentTemp.temperature < jsonConfig.TurnOnTemp) {
+    //   console.log('PiInterface: current temp not warm enough to need AC. Configured with TurnOnTemp in appsettings');
+    //   return;
+    // }
+    console.log(currentTemp.temperature);
+    console.log('PiInterface: turning led on');
+    console.log('PiInterface: Send Power');
+    LED.writeSync(0);
+    await sleep(1000);
+    LED.writeSync(1)
+    console.log('PiInterface: Cut Power');
+    console.log('PiInterface: turned led on');
+  },
+
   turnLEDOn: function () {
     console.log("PiInterface: checking current temp before turning on");
     const currentTemp = this.getTemperature();
