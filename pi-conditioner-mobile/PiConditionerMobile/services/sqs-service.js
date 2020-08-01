@@ -19,7 +19,7 @@ export default class sqsService {
         const params = {
             DelaySeconds: 5,
             MessageBody: JSON.stringify({getStatus: true}),
-            QueueUrl: jsonConfig.SQSQueueURL
+            QueueUrl: configJson.SQSQueueURL
           };
 
           sqs.sendMessage(params, function(err, data) {

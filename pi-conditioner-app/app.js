@@ -20,6 +20,7 @@ const queueURL = jsonConfig.SQSQueueURL;
 
 const listener = Consumer.create({
   queueUrl: queueURL,
+  region: 'us-east-2',
   handleMessage: async (message) => {
     var temp = piInterface.getTemperature();
     var isOn = piInterface.isOn() ? 'on' : 'off';
