@@ -15,7 +15,7 @@ var moment = require('moment');
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
 
-const sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
+const sqs = new AWS.SQS({ apiVersion: '2012-11-05', region: 'us-east-2' });
 const queueURL = jsonConfig.SQSQueueURL;
 
 const listener = Consumer.create({
