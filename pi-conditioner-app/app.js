@@ -18,8 +18,6 @@ const useCronJob = process.argv[2] == 'useCron';
 const sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
 const queueURL = jsonConfig.SQSQueueURL;
 
-var isAcOn = false;
-
 const listener = Consumer.create({
   queueUrl: queueURL,
   handleMessage: async (message) => {
@@ -50,19 +48,27 @@ if (useCronJob) {
 
 app.get('/', (req, res) => res.send('hello world'));
 
+
 app.get('/on', function (req, res) {
   console.log('API: called to turn pi on');
-  piInterface.toggleAcPower();
-  isAcOn = true;
   var isOn = piInterface.isOn() ? 'on' : 'off';
+  if (isOn === 'on') {
+    res.send(JSON.stringify({ success: true, status: isOn }));
+    return;
+  }
+  piInterface.toggleAcPowerOn();
+  isOn = piInterface.isOn() ? 'on' : 'off';
   res.send(JSON.stringify({ success: true, status: isOn }));
 });
 
 app.get('/off', function (req, res) {
   console.log('API: called to turn pi off');
-  piInterface.toggleAcPower();
-  isAcOn = false;
+  piInterface.toggleAcPowerOff();
   var isOn = piInterface.isOn() ? 'on' : 'off';
+  if (isOn === 'on') {
+    piInterface.toggleAcPowerOff();
+    isOn = piInterface.isOn() ? 'on' : 'off';
+  }
   res.send(JSON.stringify({ success: true, status: isOn }));
 });
 

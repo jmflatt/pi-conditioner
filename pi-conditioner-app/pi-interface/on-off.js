@@ -1,5 +1,6 @@
 var Gpio = require('onoff').Gpio;
-var LED = new Gpio(18, 'high');
+var AC = new Gpio(18, 'high');
+var ACIsOnPin = new Gpio(21, 'in');
 const tempSensor = require('node-dht-sensor');
 const jsonConfig = require('../appsettings.json');
 
@@ -16,18 +17,30 @@ module.exports = {
     return { temperature: readout.temperature.toFixed(1), humidity: readout.humidity.toFixed(1) };
   },
 
-  toggleAcPower: async function () {
+  toggleAcPowerOn: async function () {
     const currentTemp = this.getTemperature();
-    // if (currentTemp.temperature < jsonConfig.TurnOnTemp) {
-    //   console.log('PiInterface: current temp not warm enough to need AC. Configured with TurnOnTemp in appsettings');
-    //   return;
-    // }
+    if (currentTemp.temperature < jsonConfig.TurnOnTemp) {
+      console.log('PiInterface: current temp not warm enough to need AC. Configured with TurnOnTemp in appsettings');
+      return;
+    }
     console.log(currentTemp.temperature);
     console.log('PiInterface: turning led on');
     console.log('PiInterface: Send Power');
-    LED.writeSync(0);
+    AC.writeSync(0);
     await new Promise(resolve => setTimeout(resolve, 1000));
-    LED.writeSync(1)
+    AC.writeSync(1)
+    console.log('PiInterface: Cut Power');
+    console.log('PiInterface: turned led on');
+  },
+
+  toggleAcPowerOff: async function () {
+    const currentTemp = this.getTemperature();
+    console.log(currentTemp.temperature);
+    console.log('PiInterface: turning led on');
+    console.log('PiInterface: Send Power');
+    AC.writeSync(0);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    AC.writeSync(1)
     console.log('PiInterface: Cut Power');
     console.log('PiInterface: turned led on');
   },
@@ -41,22 +54,22 @@ module.exports = {
     }
     console.log(currentTemp.temperature);
     console.log('PiInterface: turning led on');
-    if (LED.readSync() === 1) {
+    if (AC.readSync() === 1) {
       console.log('PiInterface: turned led on');
-      LED.writeSync(0);
+      AC.writeSync(0);
     }
   },
 
   turnLEDOff: function () {
     console.log('PiInterface: turning led off');
-    if (LED.readSync() === 0) {
+    if (AC.readSync() === 0) {
       console.log('PiInterface: turned led off');
-      LED.writeSync(1);
+      AC.writeSync(1);
     }
   },
 
   isOn: function () {
-    return LED.readSync() === 1;
+    return ACIsOnPin.readSync() === 1;
   },
 
 
