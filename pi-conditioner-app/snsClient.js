@@ -2,7 +2,7 @@ var configJson = require('./appsettings.json');
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Set region
-AWS.config.update({region: configJson.SNSReqion});
+AWS.config.update({region: configJson.SNSRegion});
 
 module.exports = {
     

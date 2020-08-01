@@ -15,12 +15,11 @@ var moment = require('moment');
 const CronJob = require('cron').CronJob;
 const useCronJob = process.argv[2] == 'useCron';
 
-const sqs = new AWS.SQS({ apiVersion: '2012-11-05', region: 'us-east-2' });
+const sqs = new AWS.SQS({ apiVersion: '2012-11-05'});
 const queueURL = jsonConfig.SQSQueueURL;
 
 const listener = Consumer.create({
   queueUrl: queueURL,
-  region: 'us-east-2',
   handleMessage: async (message) => {
     var temp = piInterface.getTemperature();
     var isOn = piInterface.isOn() ? 'on' : 'off';
