@@ -26,7 +26,7 @@ module.exports = {
     console.log('PiInterface: turning led on');
     console.log('PiInterface: Send Power');
     LED.writeSync(0);
-    await sleep(1000);
+    await new Promise(resolve => setTimeout(resolve, 1000));
     LED.writeSync(1)
     console.log('PiInterface: Cut Power');
     console.log('PiInterface: turned led on');
