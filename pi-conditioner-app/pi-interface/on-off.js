@@ -17,7 +17,7 @@ module.exports = {
   },
 
   toggleAcPower: async function () {
-    // const currentTemp = this.getTemperature();
+    const currentTemp = this.getTemperature();
     // if (currentTemp.temperature < jsonConfig.TurnOnTemp) {
     //   console.log('PiInterface: current temp not warm enough to need AC. Configured with TurnOnTemp in appsettings');
     //   return;
