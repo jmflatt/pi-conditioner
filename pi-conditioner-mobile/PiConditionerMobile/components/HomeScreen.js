@@ -51,9 +51,7 @@ class HomeScreen extends React.Component {
 
     render() {
         return (
-            <View>
-                {!this.state.error ?
-                    <View>
+                    <View style={styles.body}>
                         <View style={styles.sectionContainer}>
                             <Text style={styles.sectionTitle}>Temperature</Text>
                             <Text style={styles.sectionDescription}>
@@ -75,6 +73,7 @@ class HomeScreen extends React.Component {
                                 {this.state.status}
                             </Text>
                         </View>
+                        
                         <View style={styles.rowContainer}>
                             <TouchableOpacity
                                 style={styles.powerButtonOpacity}
@@ -84,6 +83,7 @@ class HomeScreen extends React.Component {
                                     <Image source={require('../images/PowerButton.png')}  style={styles.powerButton}/>
                                 </View> 
                             </TouchableOpacity>
+                            
                             <TouchableOpacity
                                 style={styles.powerButtonOpacity}
                                 onPress={() => this.getRoomInformation()}
@@ -92,26 +92,15 @@ class HomeScreen extends React.Component {
                                     <Image source={require('../images/RefreshButton.png')}  style={styles.refreshButton}/>
                                 </View> 
                             </TouchableOpacity>
-                        </View>
+                        </View> 
 
-                        <View style={styles.sectionContainer}>
+                         <View style={styles.sectionContainer}>
                             
                         </View>
-                        
                         <View style={styles.sectionContainer}>
-                            {/* <TouchableOpacity
-                                style={styles.toggleACButton}
-                                onPress={() => this.getRoomInformation()}
-                            >
-                                <Text style={styles.buttonText}>Refresh AC Status</Text>
-                            </TouchableOpacity> */}
-                        </View>
-                    </View>
-                    :
-                    <View>
-                        <View style={styles.sectionContainer}>
-                            <Text style={styles.sectionTitle}>Currently Not On the AC Network</Text>
-                        </View>
+                            
+                            </View>
+
                         <View style={styles.sectionContainer}>
                             <TouchableOpacity
                                 style={styles.toggleACButton}
@@ -120,23 +109,23 @@ class HomeScreen extends React.Component {
                                 <Text style={styles.buttonText}> Request Remote Status</Text>
                             </TouchableOpacity>
                         </View>
+                        <View style={styles.endOfContainer}></View>
+
                     </View>
-                }
-            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     scrollView: {
-        backgroundColor: Colors.lighter,
+        backgroundColor: Colors.black,
     },
     engine: {
         position: 'absolute',
         right: 0,
     },
     body: {
-        backgroundColor: Colors.white,
+        backgroundColor: 'black',
     },
     sectionContainer: {
         marginTop: 32,
@@ -145,14 +134,14 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 24,
         fontWeight: '600',
-        color: Colors.black,
+        color: Colors.lighter,
         textAlign: "center"
     },
     sectionDescription: {
         marginTop: 8,
         fontSize: 18,
         fontWeight: '400',
-        color: Colors.dark,
+        color: Colors.lighter,
         textAlign: "center"
     },
     highlight: {
@@ -174,7 +163,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingLeft: 40,
         paddingRight: 40,
-        backgroundColor: '#79bd9d',
+        backgroundColor: '#799ed9',
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black'
@@ -187,6 +176,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingLeft: 40,
         paddingRight: 40,
+        backgroundColor: 'black'
     },
     buttonText: {
         fontSize: 20,
@@ -197,7 +187,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: 'black'
     },
     refreshButton: {
         ...StyleSheet.absoluteFillObject,
@@ -207,7 +197,7 @@ const styles = StyleSheet.create({
         marginLeft: 70,
         paddingBottom: 10,
         marginBottom: 20,
-        backgroundColor: 'transparent',
+        backgroundColor: 'black',
     },  
     powerButton: {
         ...StyleSheet.absoluteFillObject,
@@ -223,6 +213,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 20
       },
+      endOfContainer: {
+        marginTop: 200
+      }
 });
 
 export default HomeScreen;

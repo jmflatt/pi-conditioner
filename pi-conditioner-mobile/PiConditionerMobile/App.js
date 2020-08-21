@@ -29,42 +29,29 @@ import HomeScreen  from './components/HomeScreen';
 
 const App: () => React$Node = () => {
   return (
-    <>
+    <View style={styles.body}>
     <View style={styles.header}>
-      <Image style={styles.logo} source={require('./images/pi-conditioner-logo.png')}></Image> 
+      <Image style={styles.logo} source={require('./images/pi-conditioner-logo.jpg')}></Image> 
      </View>
 
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-          <HomeScreen/>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+      <View style={styles.body}>
+      <HomeScreen/>
+      </View>
+    </View>
   );
 };
 
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: 'black',
   },
   engine: {
     position: 'absolute',
     right: 0,
   },
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: 'black',
   },
   sectionContainer: {
     marginTop: 32,
@@ -115,14 +102,15 @@ const styles = StyleSheet.create({
   logo: {
     marginTop: 100,
     height: 80,
-    width: 400,
+    width: 420,
 
   },
   header: {
     borderColor: 'black',
     borderStyle: "solid",
     borderBottomWidth: 5,
-    borderTopWidth: 5
+    borderTopWidth: 5,
+    backgroundColor: 'black'
   }
 });
 
