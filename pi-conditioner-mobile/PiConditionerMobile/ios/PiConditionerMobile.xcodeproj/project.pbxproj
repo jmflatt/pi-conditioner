@@ -627,7 +627,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3E3E4E3ABED1C4CBE0937436 /* Pods-PiConditionerMobile.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7RWQX8HRY2;
@@ -655,7 +655,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1AE9612169EB8EB8FE7D374B /* Pods-PiConditionerMobile.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7RWQX8HRY2;
