@@ -31,42 +31,42 @@ listener.start();
 
 if (useCronJob) {
   console.log(`cron job enabled`);
-  const job = new CronJob('*/5 * * * *', function () {
+  const job = new CronJob('*/15 * * * *', function () {
     const dateTime = moment().format('MM/DD/YYYY:HH:mm:ss');
     console.log(`Cron: kicking off ac temp check ${dateTime}`);
     const temp = piInterface.getTemperature();
-    if ((!piInterface.isOn()) && temp.temperature > jsonConfig.TurnOnTemp) {
+    if ((!piInterface.isOn()) && temp.temperature > (jsonConfig.TurnOnTemp + 1)) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac on`);
       piInterface.toggleAcPowerOn();
     } else if ((piInterface.isOn()) && temp.temperature < jsonConfig.TurnOffTemp) {
       console.log(`Cron: temp check recorded: ${temp.temperature} turning ac off`);
       piInterface.toggleAcPowerOff();
     }
-  }, null, true, 'America/Chicago');
+  }, null, true, 'America/New_York');
   job.start();
 }
 
 app.get('/', (req, res) => res.send('hello world'));
 
 
-app.get('/on', function (req, res) {
+app.get('/on', async (req, res) => {
   console.log('API: called to turn pi on');
   var isOn = piInterface.isOn() ? 'on' : 'off';
   if (isOn === 'on') {
     res.send(JSON.stringify({ success: true, status: isOn }));
     return;
   }
-  piInterface.toggleAcPowerOn();
+  await piInterface.toggleAcPowerOn();
   isOn = piInterface.isOn() ? 'on' : 'off';
   res.send(JSON.stringify({ success: true, status: isOn }));
 });
 
-app.get('/off', function (req, res) {
+app.get('/off', async (req, res) => {
   console.log('API: called to turn pi off');
   piInterface.toggleAcPowerOff();
   var isOn = piInterface.isOn() ? 'on' : 'off';
   if (isOn === 'on') {
-    piInterface.toggleAcPowerOff();
+    await piInterface.toggleAcPowerOff();
     isOn = piInterface.isOn() ? 'on' : 'off';
   }
   res.send(JSON.stringify({ success: true, status: isOn }));

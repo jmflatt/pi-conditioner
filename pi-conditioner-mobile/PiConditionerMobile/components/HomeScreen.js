@@ -55,7 +55,7 @@ class HomeScreen extends React.Component {
                 {!this.state.error ?
                     <View>
                         <View style={styles.sectionContainer}>
-                            <Text style={styles.sectionTitle}>Current Temperature</Text>
+                            <Text style={styles.sectionTitle}>Temperature</Text>
                             <Text style={styles.sectionDescription}>
                                 {this.state.temperature + '\u00b0' + ' Fahrenheit'}
                             </Text>                      
@@ -64,32 +64,47 @@ class HomeScreen extends React.Component {
                             </Text>
                         </View>
                         <View style={styles.sectionContainer}>
-                            <Text style={styles.sectionTitle}>Current Humidity</Text>
+                            <Text style={styles.sectionTitle}>Humidity</Text>
                             <Text style={styles.sectionDescription}>
                                 {this.state.humidity + '%'}
                             </Text>
                         </View>
                         <View style={styles.sectionContainer}>
-                            <Text style={styles.sectionTitle}>Current Status</Text>
+                            <Text style={styles.sectionTitle}>Status</Text>
                             <Text style={styles.sectionDescription}>
                                 {this.state.status}
                             </Text>
                         </View>
-                        <View style={styles.sectionContainer}>
+                        <View style={styles.rowContainer}>
                             <TouchableOpacity
-                                style={styles.toggleACButton}
+                                style={styles.powerButtonOpacity}
                                 onPress={() => this.toggleAcStatus()}
                             >
-                                <Text style={styles.buttonText}>{this.state.status == 'on' ? 'Turn AC Off' : 'Turn AC On'}</Text>
+                                <View style={styles.absoluteView}>
+                                    <Image source={require('../images/PowerButton.png')}  style={styles.powerButton}/>
+                                </View> 
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.powerButtonOpacity}
+                                onPress={() => this.getRoomInformation()}
+                            >
+                                <View style={styles.absoluteView}>
+                                    <Image source={require('../images/RefreshButton.png')}  style={styles.refreshButton}/>
+                                </View> 
                             </TouchableOpacity>
                         </View>
+
                         <View style={styles.sectionContainer}>
-                            <TouchableOpacity
+                            
+                        </View>
+                        
+                        <View style={styles.sectionContainer}>
+                            {/* <TouchableOpacity
                                 style={styles.toggleACButton}
                                 onPress={() => this.getRoomInformation()}
                             >
                                 <Text style={styles.buttonText}>Refresh AC Status</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </View>
                     :
@@ -164,11 +179,50 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black'
     },
+    powerButtonOpacity: {
+        marginRight: 40,
+        marginLeft: 40,
+        marginTop: 10,
+        paddingTop: 10,
+        paddingBottom: 20,
+        paddingLeft: 40,
+        paddingRight: 40,
+    },
     buttonText: {
         fontSize: 20,
         textAlign: "center"
-
     },
+    absoluteView: {
+        flex: 1,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent'
+    },
+    refreshButton: {
+        ...StyleSheet.absoluteFillObject,
+        marginTop: 27,
+        height: 60,
+        width: 60,
+        marginLeft: 70,
+        paddingBottom: 10,
+        marginBottom: 20,
+        backgroundColor: 'transparent',
+    },  
+    powerButton: {
+        ...StyleSheet.absoluteFillObject,
+        marginTop: 20,
+        height: 80,
+        width: 80,
+        marginLeft: 40,
+        paddingBottom: 10,
+        marginBottom: 20,
+        backgroundColor: 'transparent',
+      },
+      rowContainer: {
+        flexDirection: 'row',
+        paddingTop: 20
+      },
 });
 
 export default HomeScreen;
